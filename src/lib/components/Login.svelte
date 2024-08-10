@@ -12,7 +12,12 @@
   });
 </script>
 
-<form on:submit|preventDefault class="flex flex-col gap-3">
+<form
+  on:submit|preventDefault={() => {
+    signIn(username, password);
+  }}
+  class="flex flex-col gap-3"
+>
   <input class="input" type="text" placeholder="Username" bind:value={username} />
   <input class="input" type="password" placeholder="Password" bind:value={password} />
   <button
