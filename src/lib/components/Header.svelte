@@ -16,20 +16,16 @@
     <div class="flex-1 px-1">
       <a class="font-thin text-xl active:scale-95 transition-transform" href="/{base}">TC3</a>
     </div>
-    <div class="flex-none">
+    <div class="flex-none flex items-center gap-2">
       {#if $currentUser}
-        <button class="btn btn-ghost btn-sm btn-square rounded-full" on:click={signOut}>
-          <LucideLogOut></LucideLogOut>
+        <p>Signed in as <b>{$currentUser.username}</b></p>
+        <button class="btn btn-ghost btn-sm rounded-full" on:click={signOut}>
+          <LucideLogOut></LucideLogOut> Sign out
         </button>
       {:else}
-        <button
-          class="btn btn-ghost btn-sm btn-square rounded-full"
-          on:click={() => {
-            dispatch("signin");
-          }}
-        >
-          <LucideLogIn></LucideLogIn>
-        </button>
+        <a class="btn btn-ghost btn-sm rounded-full" href="{base}/sign-in">
+          <LucideLogIn></LucideLogIn> Sign in
+        </a>
       {/if}
     </div>
   </div>

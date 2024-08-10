@@ -1,8 +1,15 @@
 <script lang="ts">
-  import { register, signIn } from "$lib/pocketbase";
+  import { base } from "$app/paths";
+  import { currentUser, register, signIn } from "$lib/pocketbase";
 
   let username: string;
   let password: string;
+
+  currentUser.subscribe((value: any) => {
+    if (value !== null) {
+      window.location.replace(`${base}/`);
+    }
+  });
 </script>
 
 <form on:submit|preventDefault class="flex flex-col gap-3">
