@@ -15,9 +15,9 @@
     </div>
     {#if $currentUser}
       <div class="flex-1 flex items-center justify-end">
-        <p class="px-2">Signed in as <b>{$currentUser.username}</b></p>
-        <a class="btn btn-ghost btn-sm rounded-full btn-square" href="{base}/account">
+        <a class="btn btn-ghost btn-sm rounded-full" href="{base}/account">
           <LucideUser></LucideUser>
+          {$currentUser.username}
         </a>
         <button class="btn btn-ghost btn-sm rounded-full" on:click={signOut}>
           <LucideLogOut></LucideLogOut> Sign out
