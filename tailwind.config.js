@@ -28,6 +28,7 @@ export default {
           "accent-content": "#ffffff",
           neutral: "#dcdcdc",
           "neutral-content": "#525252",
+          error: "#de4343",
           "base-100": "#ffffff",
           "base-200": "#eeeeee",
           "base-300": "#cbcbcb",

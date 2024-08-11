@@ -43,6 +43,7 @@
     class="input input-sm bg-transparent flex-1"
     bind:value={newMessage}
     bind:this={input}
+    placeholder="Message"
   />
   <button class="btn btn-ghost btn-sm btn-square rounded-full" type="submit"
     ><LucideSendHorizontal></LucideSendHorizontal>

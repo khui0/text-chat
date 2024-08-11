@@ -61,7 +61,7 @@
       {#if !self}
         <p class="text-xs mx-3 text-base-content/50">{message.expand?.user?.username}</p>
       {/if}
-      <p class="px-3 py-2 bg-base-300 w-fit rounded-3xl">
+      <p class="px-3 py-2 bg-base-200 w-fit rounded-3xl">
         {message.text}
       </p>
     </li>
