@@ -5,15 +5,11 @@
   import LucideLogIn from "~icons/lucide/log-in";
 
   import { currentUser, signOut } from "$lib/pocketbase";
-
-  import { createEventDispatcher } from "svelte";
-
-  const dispatch = createEventDispatcher();
 </script>
 
 <header class="sticky top-0 z-10">
   <div class="flex items-center p-2 bg-base-200/80 backdrop-blur-lg rounded-box">
-    <div class="flex-1 px-1">
+    <div class="flex-1 px-2">
       <a class="font-thin text-xl active:scale-95 transition-transform" href="/{base}">TC3</a>
     </div>
     <div class="flex-none flex items-center gap-2">
