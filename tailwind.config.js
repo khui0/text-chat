@@ -35,7 +35,7 @@ export default {
           "base-300": "#cbcbcb",
           "base-content": "#141414",
 
-          "--rounded-box": "1.5rem",
+          "--rounded-box": "2rem",
           "--rounded-btn": "1.5rem",
           "--rounded-badge": "0.75rem",
           "--animation-btn": "0.25s",
