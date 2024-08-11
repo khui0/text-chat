@@ -32,7 +32,7 @@
       sendVerificationEmail();
       awaitingVerification = true;
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       errors = ["Unable to create account"];
     }
   }
