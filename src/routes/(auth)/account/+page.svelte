@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from "$app/paths";
   import { currentUser, pb, signOut } from "$lib/pocketbase";
 
   import LucideLogOut from "~icons/lucide/log-out";
@@ -15,11 +16,9 @@
         "Delete",
         true,
       )
-      .then(() => {
-        console.log("delete");
-      })
-      .catch(() => {
-        console.log("nvm");
+      .then(async () => {
+        await pb.collection("users").delete($currentUser?.id);
+        window.location.replace(`${base}/goodbye`);
       });
   }
 </script>
@@ -33,6 +32,7 @@
       </button>
     </div>
   </div>
+
   <button class="btn btn-error" on:click={deleteAccount}>Delete account</button>
 </div>
 

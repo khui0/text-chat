@@ -12,8 +12,6 @@
 
   let loading: boolean = false;
 
-  let awaitingVerification: boolean = false;
-
   const schema = z
     .object({
       username: z.string().min(3, "Username must be at least 3 characters"),
@@ -33,7 +31,7 @@
       if (!data) return;
       await pb.collection("users").create(data);
       sendVerificationEmail();
-      awaitingVerification = true;
+      window.location.href = `${window.location.origin}${base}/verify?email=${encodeURIComponent(email)}`;
     } catch (err) {
       setTimeout(() => {
         errors = ["Unable to create account"];
@@ -65,52 +63,35 @@
   }
 </script>
 
-<h2 class="mb-2 text-center text-xl font-light">
-  {!awaitingVerification ? "Create an account" : "Verify your email"}
-</h2>
-{#if !awaitingVerification}
-  <form on:submit|preventDefault={register} class="flex flex-col gap-3">
-    <input class="input input-bordered" type="text" placeholder="Username" bind:value={username} />
-    <input
-      type="email"
-      class="input input-bordered"
-      placeholder="Email address"
-      bind:value={email}
-    />
-    <input
-      class="input input-bordered"
-      type="password"
-      placeholder="Password"
-      bind:value={password}
-    />
-    <input
-      class="input input-bordered"
-      type="password"
-      placeholder="Confirm password"
-      bind:value={passwordConfirm}
-    />
-    {#if errors.length > 0}
-      <ul class="text-sm text-error">
-        {#each errors as error}
-          <li><p>{error}</p></li>
-        {/each}
-      </ul>
+<h2 class="mb-2 text-center text-xl font-light">Create an account</h2>
+<form on:submit|preventDefault={register} class="flex flex-col gap-3">
+  <input class="input input-bordered" type="text" placeholder="Username" bind:value={username} />
+  <input type="email" class="input input-bordered" placeholder="Email address" bind:value={email} />
+  <input
+    class="input input-bordered"
+    type="password"
+    placeholder="Password"
+    bind:value={password}
+  />
+  <input
+    class="input input-bordered"
+    type="password"
+    placeholder="Confirm password"
+    bind:value={passwordConfirm}
+  />
+  {#if errors.length > 0}
+    <ul class="text-sm text-error">
+      {#each errors as error}
+        <li><p>{error}</p></li>
+      {/each}
+    </ul>
+  {/if}
+  <a class="btn" href="{base}/sign-in">Sign in</a>
+  <button class="btn btn-primary" on:click={register}>
+    {#if !loading}
+      Register
+    {:else}
+      <span class="loading loading-spinner loading-sm"></span>
     {/if}
-    <a class="btn" href="{base}/sign-in">Sign in</a>
-    <button class="btn btn-primary" on:click={register}>
-      {#if !loading}
-        Register
-      {:else}
-        <span class="loading loading-spinner loading-sm"></span>
-      {/if}
-    </button>
-  </form>
-{:else}
-  <div class="text-center flex flex-col gap-3">
-    <p>
-      An email was sent to {email}. Check your spam folder in case if you can't find it!
-    </p>
-    <button class="btn" on:click={sendVerificationEmail}>Resend email</button>
-    <a class="btn" href="{base}/sign-in">Sign in</a>
-  </div>
-{/if}
+  </button>
+</form>
