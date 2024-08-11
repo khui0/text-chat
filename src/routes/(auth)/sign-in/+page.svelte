@@ -48,6 +48,7 @@
         .map((error) => error.message)
         .filter((message) => message !== "Required");
     }
+    loading = false;
   }
 </script>
 
