@@ -54,7 +54,7 @@
   });
 </script>
 
-<ul class="overflow-auto flex flex-col gap-1 my-6 py-8" bind:this={feed}>
+<ul class="overflow-auto flex flex-col gap-0.5 my-6 py-8" bind:this={feed}>
   {#each messages as message, i (message.id)}
     <!-- Look away -->
     {@const self = message.expand?.user?.id === $currentUser?.id}
