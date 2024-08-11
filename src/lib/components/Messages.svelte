@@ -56,14 +56,31 @@
 
 <ul class="overflow-auto flex flex-col gap-1" bind:this={feed}>
   {#each messages as message, i (message.id)}
+    <!-- Look away -->
     {@const self = message.expand?.user?.id === $currentUser?.id}
-    {@const continuing =
-      i !== 0 && messages[i].expand?.user?.id === messages[i - 1].expand?.user?.id}
+    {@const current = messages[i].expand?.user?.id}
+    {@const previous = i !== 0 && messages[i - 1].expand?.user?.id}
+    {@const next = i !== messages.length - 1 && messages[i + 1].expand?.user?.id}
+    {@const continuing = current === previous}
+    {@const middle = current === previous && current === next}
+    {@const start = current !== previous}
+    {@const end = current !== next}
+    {@const single = current !== previous && current !== next}
     <li class:ml-auto={self}>
       {#if !self && !continuing}
-        <p class="text-xs mx-3 text-base-content/50">{message.expand?.user?.username || "Deleted User"}</p>
+        <p class="text-xs mx-3 text-base-content/50">
+          {message.expand?.user?.username || "Deleted User"}
+        </p>
       {/if}
-      <p class="px-3 py-2 bg-base-200 w-fit rounded-3xl">
+      <p
+        class="px-3 py-2 bg-base-200 w-fit rounded-3xl"
+        class:rounded-l-md={!self && middle && !single}
+        class:rounded-bl-md={!self && start && !single}
+        class:rounded-tl-md={!self && end && !single}
+        class:rounded-r-md={self && middle && !single}
+        class:rounded-br-md={self && start && !single}
+        class:rounded-tr-md={self && end && !single}
+      >
         {message.text}
       </p>
     </li>
