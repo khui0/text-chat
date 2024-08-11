@@ -4,33 +4,26 @@
   import { z } from "zod";
 
   let email: string;
-  let password: string;
 
   let errors: String[] = [];
+  let success: string = "";
 
   let loading: boolean = false;
 
   const schema = z.object({
     email: z.string().email("Enter a valid email address"),
-    password: z.string(),
   });
 
-  currentUser.subscribe((value: any) => {
-    if (value !== null) {
-      window.location.replace(`${base}/`);
-    }
-  });
-
-  async function signIn() {
+  async function resetPassword() {
     loading = true;
     try {
       const data = validate();
       if (!data) return;
-      await pb.collection("users").authWithPassword(data.email, data.password);
-    } catch (err) {
+      await pb.collection("users").requestPasswordReset(data.email);
+    } finally {
       setTimeout(() => {
-        errors = ["Invalid credentials"];
         loading = false;
+        success = "Email sent if the account exists";
       }, 3000);
     }
   }
@@ -38,7 +31,6 @@
   function validate() {
     const result = schema.safeParse({
       email,
-      password,
     });
     if (result.success) {
       errors = [];
@@ -47,20 +39,16 @@
       errors = result.error?.errors
         .map((error) => error.message)
         .filter((message) => message !== "Required");
+      success = "";
     }
     loading = false;
   }
 </script>
 
-<h2 class="mb-2 text-center text-xl font-light">Welcome back</h2>
-<form on:submit|preventDefault={signIn} class="flex flex-col gap-3">
+<h2 class="mb-2 text-center text-xl font-light">Reset password</h2>
+<form on:submit|preventDefault={resetPassword} class="flex flex-col gap-3">
   <input type="email" class="input input-bordered" placeholder="Email address" bind:value={email} />
-  <input
-    class="input input-bordered"
-    type="password"
-    placeholder="Password"
-    bind:value={password}
-  />
+
   {#if errors.length > 0}
     <ul class="text-sm text-error">
       {#each errors as error}
@@ -68,13 +56,14 @@
       {/each}
     </ul>
   {/if}
-  <a class="btn" href="{base}/register">Register</a>
-  <button class="btn btn-primary" on:click={signIn}>
+  <button class="btn" on:click={resetPassword}>
     {#if !loading}
-      Sign in
+      Send reset email
     {:else}
       <span class="loading loading-spinner loading-sm"></span>
     {/if}
   </button>
-  <a class="link text-center" href="{base}/reset-password">Reset password</a>
+  {#if success}
+    <p class="text-sm text-success">{success}</p>
+  {/if}
 </form>

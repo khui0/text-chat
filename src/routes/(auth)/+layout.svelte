@@ -14,7 +14,7 @@
       <LucideArrowLeft></LucideArrowLeft>
     </button>
     <div class="flex flex-col items-center">
-      <h1 class="text-3xl font-light">TC3</h1>
+      <h1 class="text-3xl font-light active:scale-90 transition-transform"><a href="{base}/">TC3</a></h1>
     </div>
   </div>
   <slot></slot>
