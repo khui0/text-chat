@@ -53,21 +53,23 @@
   }
 </script>
 
-<form
-  on:submit|preventDefault={sendMessage}
-  class="fixed bottom-3 left-3 right-3 z-10 flex items-end gap-2 p-2 bg-base-200/80 backdrop-blur-xl rounded-btn mt-auto"
->
-  <textarea
-    class="textarea textarea-sm min-h-0 leading-normal resize-none bg-transparent flex-1 rounded-2xl"
-    placeholder="Message"
-    rows="1"
-    bind:value={newMessage}
-    bind:this={input}
-    on:paste={updateRows}
-    on:input={updateRows}
-    on:keydown={enterKey}
-  ></textarea>
-  <button class="btn btn-ghost btn-sm btn-square rounded-full" type="submit"
-    ><LucideSendHorizontal></LucideSendHorizontal>
-  </button>
-</form>
+<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-[min(100%,1000px)] z-10 p-3">
+  <form
+    on:submit|preventDefault={sendMessage}
+    class="flex items-end gap-2 p-2 bg-base-200/80 backdrop-blur-xl rounded-btn mt-auto"
+  >
+    <textarea
+      class="textarea textarea-sm min-h-0 leading-normal resize-none bg-transparent flex-1 rounded-2xl"
+      placeholder="Message"
+      rows="1"
+      bind:value={newMessage}
+      bind:this={input}
+      on:paste={updateRows}
+      on:input={updateRows}
+      on:keydown={enterKey}
+    ></textarea>
+    <button class="btn btn-ghost btn-sm btn-square rounded-full" type="submit"
+      ><LucideSendHorizontal></LucideSendHorizontal>
+    </button>
+  </form>
+</div>
