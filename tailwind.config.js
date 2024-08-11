@@ -20,10 +20,6 @@ export default {
     themes: [
       {
         light: {
-          primary: "#43bfde",
-          "primary-content": "#ffffff",
-          secondary: "#000000",
-          "secondary-content": "#ffffff",
           accent: "#43bfde",
           "accent-content": "#ffffff",
           neutral: "#dcdcdc",
@@ -37,10 +33,10 @@ export default {
 
           "--rounded-box": "2rem",
           "--rounded-btn": "1.5rem",
-          "--rounded-badge": "0.75rem",
+          "--rounded-badge": "1rem",
           "--animation-btn": "0.25s",
           "--animation-input": "0.2s",
-          "--btn-focus-scale": "0.95",
+          "--btn-focus-scale": "0.9",
           "--border-btn": "1px",
           "--tab-border": "1px",
           "--tab-radius": "0.5rem",

@@ -5,15 +5,21 @@
 
   let messages: RecordModel[] = [];
 
+  let reactions: RecordModel[] = [];
+
   let feed: HTMLElement;
 
   onMount(async () => {
-    const resultList = await pb.collection("messages").getList(1, 50, {
+    reactions = await pb.collection("reactions").getFullList({
+      sort: "created",
+      expand: "message,user",
+    });
+
+    const messageList = await pb.collection("messages").getList(1, 50, {
       sort: "created",
       expand: "user",
     });
-
-    messages = resultList.items;
+    messages = messageList.items;
 
     pb.collection("messages").subscribe("*", async ({ action, record }) => {
       if (action === "create") {
@@ -25,7 +31,26 @@
         messages = messages.filter((m) => m.id !== record.id);
       }
     });
+
+    pb.collection("reactions").subscribe("*", async ({ action, record }) => {
+      if (action === "create") {
+        record.expand = {
+          message: await pb.collection("messages").getOne(record.message),
+          user: await pb.collection("users").getOne(record.user),
+        };
+        reactions = [...reactions, record];
+        messages = messages;
+      }
+      if (action === "delete") {
+        reactions = reactions.filter((item) => item.id !== record.id);
+        messages = messages;
+      }
+    });
   });
+
+  function getReactions(message: RecordModel) {
+    return reactions.filter((item) => item.message === message.id);
+  }
 
   onDestroy(() => {
     pb.collection("message").unsubscribe("*");
@@ -66,9 +91,11 @@
     {@const start = current !== previous}
     {@const end = current !== next}
     {@const single = current !== previous && current !== next}
+    {@const reactions = getReactions(message)}
     <li
-      class="max-w-[min(80%,500px)]"
+      class="max-w-[min(80%,500px)] flex flex-col"
       class:ml-auto={self}
+      class:items-end={self}
       title={new Date(message.created).toLocaleString()}
     >
       {#if !self && !continuing}
@@ -89,6 +116,15 @@
       >
         {message.text}
       </p>
+      {#if reactions.length > 0}
+        <p
+          class="px-2 py-1 rounded-badge bg-base-200 w-fit text-xs -translate-y-2 -mb-2 mx-1 border-2 border-base-100 flex gap-1"
+        >
+          {#each reactions as reaction}
+            <span title={reaction.expand?.user?.username}>{reaction.text}</span>
+          {/each}
+        </p>
+      {/if}
     </li>
   {/each}
 </ul>
