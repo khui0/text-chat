@@ -61,7 +61,7 @@
       i !== 0 && messages[i].expand?.user?.id === messages[i - 1].expand?.user?.id}
     <li class:ml-auto={self}>
       {#if !self && !continuing}
-        <p class="text-xs mx-3 text-base-content/50">{message.expand?.user?.username}</p>
+        <p class="text-xs mx-3 text-base-content/50">{message.expand?.user?.username || "Deleted User"}</p>
       {/if}
       <p class="px-3 py-2 bg-base-200 w-fit rounded-3xl">
         {message.text}
