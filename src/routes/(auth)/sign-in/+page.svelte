@@ -8,6 +8,8 @@
 
   let errors: String[] = [];
 
+  let loading: boolean = false;
+
   const schema = z.object({
     email: z.string().email("Enter a valid email address"),
     password: z.string(),
@@ -20,13 +22,16 @@
   });
 
   async function signIn() {
+    loading = true;
     try {
       const data = validate();
       if (!data) return;
       await pb.collection("users").authWithPassword(data.email, data.password);
     } catch (err) {
-      // console.error(err);
-      errors = ["Invalid credentials"];
+      setTimeout(() => {
+        errors = ["Invalid credentials"];
+        loading = false;
+      }, 3000);
     }
   }
 
@@ -63,5 +68,11 @@
     </ul>
   {/if}
   <a class="btn" href="{base}/register">Register</a>
-  <button class="btn btn-primary" on:click={signIn}>Sign in</button>
+  <button class="btn btn-primary" on:click={signIn}>
+    {#if !loading}
+      Sign in
+    {:else}
+      <span class="loading loading-spinner loading-sm"></span>
+    {/if}
+  </button>
 </form>

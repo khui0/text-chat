@@ -10,6 +10,8 @@
 
   let errors: String[] = [];
 
+  let loading: boolean = false;
+
   let awaitingVerification: boolean = false;
 
   const schema = z
@@ -25,6 +27,7 @@
     });
 
   async function register() {
+    loading = true;
     try {
       const data = validate();
       if (!data) return;
@@ -32,8 +35,10 @@
       sendVerificationEmail();
       awaitingVerification = true;
     } catch (err) {
-      // console.error(err);
-      errors = ["Unable to create account"];
+      setTimeout(() => {
+        errors = ["Unable to create account"];
+        loading = false;
+      }, 3000);
     }
   }
 
@@ -52,6 +57,7 @@
         .map((error) => error.message)
         .filter((message) => message !== "Required");
     }
+    loading = false;
   }
 
   function sendVerificationEmail() {
@@ -91,7 +97,13 @@
       </ul>
     {/if}
     <a class="btn" href="{base}/sign-in">Sign in</a>
-    <button class="btn btn-primary" on:click={register}>Register</button>
+    <button class="btn btn-primary" on:click={register}>
+      {#if !loading}
+        Register
+      {:else}
+        <span class="loading loading-spinner loading-sm"></span>
+      {/if}
+    </button>
   </form>
 {:else}
   <div class="text-center flex flex-col gap-3">
