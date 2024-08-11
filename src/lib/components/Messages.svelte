@@ -66,14 +66,14 @@
     {@const start = current !== previous}
     {@const end = current !== next}
     {@const single = current !== previous && current !== next}
-    <li class:ml-auto={self}>
+    <li class="max-w-[min(80%,500px)]" class:ml-auto={self}>
       {#if !self && !continuing}
         <p class="text-xs mx-3 text-base-content/50">
           {message.expand?.user?.username || "Deleted User"}
         </p>
       {/if}
       <p
-        class="px-3 py-2 bg-base-200 w-fit rounded-3xl"
+        class="px-3 py-2 bg-base-200 w-fit min-w-10 rounded-btn whitespace-pre-wrap"
         class:rounded-l-md={!self && middle && !single}
         class:rounded-bl-md={!self && start && !single}
         class:rounded-tl-md={!self && end && !single}
