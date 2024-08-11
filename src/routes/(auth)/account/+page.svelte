@@ -99,7 +99,7 @@
 </script>
 
 <div class="flex flex-col gap-3">
-  <div class="flex items-center p-2 bg-base-200/80 backdrop-blur-lg rounded-box">
+  <div class="flex items-center p-2 bg-base-200 rounded-box">
     <p class="px-2">Signed in as <b>{$currentUser?.username}</b></p>
     <div class="flex-1 flex items-center justify-end">
       <button class="btn btn-ghost btn-sm rounded-full" on:click={signOut}>
