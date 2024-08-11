@@ -2,11 +2,12 @@
   import { base } from "$app/paths";
   import { currentUser, pb, signOut } from "$lib/pocketbase";
   import { z } from "zod";
+  import { onMount } from "svelte";
 
   import LucideLogOut from "~icons/lucide/log-out";
 
   import Confirm from "$lib/components/Confirm.svelte";
-  import { onMount } from "svelte";
+  import Version from "$lib/components/Version.svelte";
 
   interface FormState {
     error: string;
@@ -158,6 +159,7 @@
   <!-- Delete account -->
   <h2 class="text-lg font-light">Delete account</h2>
   <button class="btn btn-error" on:click={deleteAccount}>Delete account</button>
+  <p class="text-sm text-base-content/50"><Version></Version></p>
 </div>
 
 <Confirm bind:this={confirm}></Confirm>
