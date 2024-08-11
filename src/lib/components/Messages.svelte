@@ -77,15 +77,15 @@
         </p>
       {/if}
       <p
-        class="px-3 py-2 bg-base-200 w-fit min-w-10 rounded-btn whitespace-pre-wrap"
+        class="px-3 py-2 w-fit min-w-10 rounded-btn whitespace-pre-wrap {self
+          ? 'bg-accent text-accent-content'
+          : 'bg-base-200 '}"
         class:rounded-l-md={!self && middle && !single}
         class:rounded-bl-md={!self && start && !single}
         class:rounded-tl-md={!self && end && !single}
         class:rounded-r-md={self && middle && !single}
         class:rounded-br-md={self && start && !single}
         class:rounded-tr-md={self && end && !single}
-        class:bg-accent={self}
-        class:text-accent-content={self}
       >
         {message.text}
       </p>
