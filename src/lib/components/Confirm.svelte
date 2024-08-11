@@ -11,6 +11,7 @@
   let actionText: string;
 
   let additionalClasses: string;
+  let disabled: boolean = false;
 
   export function prompt(
     title: string,
@@ -21,9 +22,27 @@
     result = new DeferredPromise();
     titleText = title;
     bodyText = body;
-    actionText = action;
     if (destructive) {
       additionalClasses = "btn-error";
+
+      let count = 10;
+      disabled = true;
+      decrement();
+      function decrement() {
+        actionText = count.toString();
+        setTimeout(() => {
+          count--;
+          if (count > 0) {
+            decrement();
+          } else {
+            // Enable button
+            actionText = action;
+            disabled = false;
+          }
+        }, 1000);
+      }
+    } else {
+      actionText = action;
     }
     modal.show();
     return result;
@@ -44,7 +63,10 @@
       class="btn btn-sm flex-1 {additionalClasses}"
       on:click={() => {
         result?.resolve("");
-      }}>{actionText}</button
+      }}
+      {disabled}
     >
+      {actionText}
+    </button>
   </form>
 </Modal>

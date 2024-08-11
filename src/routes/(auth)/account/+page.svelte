@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { currentUser, pb } from "$lib/pocketbase";
+  import { currentUser, pb, signOut } from "$lib/pocketbase";
 
-  import Header from "$lib/components/Header.svelte";
+  import LucideLogOut from "~icons/lucide/log-out";
+
   import Confirm from "$lib/components/Confirm.svelte";
 
   let confirm: Confirm;
@@ -24,7 +25,14 @@
 </script>
 
 <div class="flex flex-col gap-3">
-  <Header></Header>
+  <div class="flex items-center p-2 bg-base-200/80 backdrop-blur-lg rounded-box">
+    <p class="px-2">Signed in as <b>{$currentUser?.username}</b></p>
+    <div class="flex-1 flex items-center justify-end">
+      <button class="btn btn-ghost btn-sm rounded-full" on:click={signOut}>
+        <LucideLogOut></LucideLogOut> Sign out
+      </button>
+    </div>
+  </div>
   <button class="btn btn-error" on:click={deleteAccount}>Delete account</button>
 </div>
 
