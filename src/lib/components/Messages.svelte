@@ -54,7 +54,7 @@
   });
 </script>
 
-<ul class="overflow-auto flex flex-col gap-1" bind:this={feed}>
+<ul class="overflow-auto flex flex-col gap-1 my-6 py-8" bind:this={feed}>
   {#each messages as message, i (message.id)}
     <!-- Look away -->
     {@const self = message.expand?.user?.id === $currentUser?.id}
@@ -80,6 +80,8 @@
         class:rounded-r-md={self && middle && !single}
         class:rounded-br-md={self && start && !single}
         class:rounded-tr-md={self && end && !single}
+        class:bg-accent={self}
+        class:text-accent-content={self}
       >
         {message.text}
       </p>

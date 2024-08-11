@@ -36,7 +36,7 @@
 
 <form
   on:submit|preventDefault={sendMessage}
-  class="flex items-center gap-2 p-2 bg-base-200/80 backdrop-blur-lg rounded-box mt-auto"
+  class="fixed bottom-3 left-3 right-3 z-10 flex items-center gap-2 p-2 bg-base-200/80 backdrop-blur-xl rounded-box mt-auto"
 >
   <input
     type="text"
