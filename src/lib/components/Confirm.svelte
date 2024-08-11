@@ -13,6 +13,8 @@
   let additionalClasses: string;
   let disabled: boolean = false;
 
+  let interval: number = 0;
+
   export function prompt(
     title: string,
     body: string,
@@ -22,25 +24,26 @@
     result = new DeferredPromise();
     titleText = title;
     bodyText = body;
+    clearInterval(interval);
     if (destructive) {
       additionalClasses = "btn-error";
 
-      let count = 10;
+      const seconds: number = 10;
+      let current: number = seconds;
+
+      actionText = seconds.toString();
       disabled = true;
-      decrement();
-      function decrement() {
-        actionText = count.toString();
-        setTimeout(() => {
-          count--;
-          if (count > 0) {
-            decrement();
-          } else {
-            // Enable button
-            actionText = action;
-            disabled = false;
-          }
-        }, 1000);
-      }
+
+      interval = setInterval(() => {
+        if (current > 1) {
+          current--;
+          actionText = current.toString();
+        } else {
+          clearInterval(interval);
+          actionText = action;
+          disabled = false;
+        }
+      }, 1000);
     } else {
       actionText = action;
     }
