@@ -11,7 +11,7 @@
 <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[min(100%,1000px)] z-10 p-3">
   <header class="flex items-center p-2 bg-base-200/80 backdrop-blur-xl rounded-box">
     <div class="px-2">
-      <a class="block font-thin text-xl active:scale-90 transition-transform" href="/{base}">TC3</a>
+      <a class="block font-thin text-xl active:scale-90 transition-transform" href="{base}/">TC3</a>
     </div>
     {#if $currentUser}
       <div class="flex-1 flex items-center justify-end">
