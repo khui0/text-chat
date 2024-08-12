@@ -49,7 +49,24 @@
   });
 
   function getReactions(message: RecordModel) {
-    return reactions.filter((item) => item.message === message.id);
+    const raw = reactions.filter((item) => item.message === message.id);
+    interface ReactionCount {
+      [key: string]: number;
+    }
+    const counts: ReactionCount = {};
+    for (let i = 0; i < raw.length; i++) {
+      const text: string = raw[i].text;
+      counts[text] = counts[text] ? counts[text] + 1 : 1;
+    }
+    return Object.entries(counts);
+  }
+
+  async function addLike(message: RecordModel) {
+    await pb.collection("reactions").create({
+      text: "❤️",
+      user: $currentUser?.id,
+      message: message.id,
+    });
   }
 
   onDestroy(() => {
@@ -93,8 +110,7 @@
     {@const single = current !== previous && current !== next}
     {@const reactions = getReactions(message)}
     <li
-      class="max-w-[min(80%,500px)] flex flex-col"
-      class:ml-auto={self}
+      class="flex flex-col"
       class:items-end={self}
       title={new Date(message.created).toLocaleString()}
     >
@@ -104,7 +120,7 @@
         </p>
       {/if}
       <p
-        class="px-3 py-2 w-fit min-w-10 rounded-btn whitespace-pre-wrap {self
+        class="px-3 py-2 w-fit min-w-10 rounded-btn whitespace-pre-wrap max-w-[min(80%,500px)] {self
           ? 'bg-accent text-accent-content'
           : 'bg-base-200 '}"
         class:rounded-l-md={!self && middle && !single}
@@ -121,7 +137,7 @@
           class="px-2 py-1 rounded-badge bg-base-200 w-fit text-xs -translate-y-2 -mb-2 mx-1 border-2 border-base-100 flex gap-1"
         >
           {#each reactions as reaction}
-            <span title={reaction.expand?.user?.username}>{reaction.text}</span>
+            <span>{reaction[0]} {reaction[1] > 1 ? reaction[1] : ""}</span>
           {/each}
         </p>
       {/if}
