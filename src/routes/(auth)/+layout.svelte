@@ -1,6 +1,8 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import LucideArrowLeft from "~icons/lucide/arrow-left";
+
+  import Logo from "$lib/components/Logo.svelte";
 </script>
 
 <div class="m-auto w-[min(100%,500px)] pb-3">
@@ -15,7 +17,7 @@
     </button>
     <div class="flex flex-col items-center">
       <h1 class="text-3xl font-light active:scale-90 transition-transform">
-        <a href="{base}/">TC3</a>
+        <a href="{base}/"><Logo></Logo></a>
       </h1>
     </div>
   </div>
